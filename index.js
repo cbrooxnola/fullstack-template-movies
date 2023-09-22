@@ -19,9 +19,11 @@ app.get('/styles.css', (req, res)=> res.sendFile(styleSheet));
 
 //GET route /api/movies
 app.get('/api/movies', async(req,res,next)=>{
+  if (req.body.stars)
   try {
     const SQL = `
     SELECT * FROM movies
+    ORDER BY id 
     `
     const response = await client.query(SQL)
     res.send(response.rows)
@@ -43,6 +45,40 @@ app.put('/api/movies/:id', async(req,res,next)=>{
   } catch(error){
     next(error)
   }
+})
+
+//REMOVE from list
+app.delete('/api/movies/:id', async(req,res,next)=>{
+  try {
+    const SQL = `
+      DELETE
+      FROM movies
+      WHERE id=$1
+    `
+    const response = await client.query(SQL, [req.params.id])
+    res.send(response)
+  } catch (error) {
+    next(error)
+  }
+})
+
+//ADD to list
+app.post('api/movies', async(req,res,next)=>{
+  try {
+    const SQL = `
+    INSERT INTO movies (title, stars)
+    VALUES ($1, $2)
+    RETURNING *
+    `
+    const response = await client.query(SQL, [req.body.title, req.body.stars])
+    res.send(response.rows)
+  } catch (error){
+    next(error)
+  }
+})
+
+app.use((err,req,res,next)=>{
+  res.status(500).send(err.message);
 })
 
 const init = async()=> {
