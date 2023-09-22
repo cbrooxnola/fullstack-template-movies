@@ -18,7 +18,7 @@ const styleSheet = path.join(__dirname, 'styles.css');
 app.get('/styles.css', (req, res)=> res.sendFile(styleSheet));
 
 //GET route /api/movies
-app.get('/api/movies', async(req,res,next)=>{
+app.get('/api/movie-list', async(req,res,next)=>{
   if (req.body.stars)
   try {
     const SQL = `
@@ -33,7 +33,7 @@ app.get('/api/movies', async(req,res,next)=>{
 })
 
 //Put /api/movies/:id
-app.put('/api/movies/:id', async(req,res,next)=>{
+app.put('/api/movie-list/:id', async(req,res,next)=>{
   try {
     const SQL = `
       UPDATE movies
@@ -48,7 +48,7 @@ app.put('/api/movies/:id', async(req,res,next)=>{
 })
 
 //REMOVE from list
-app.delete('/api/movies/:id', async(req,res,next)=>{
+app.delete('/api/movie-list/:id', async(req,res,next)=>{
   try {
     const SQL = `
       DELETE
@@ -63,7 +63,7 @@ app.delete('/api/movies/:id', async(req,res,next)=>{
 })
 
 //ADD to list
-app.post('api/movies', async(req,res,next)=>{
+app.post('api/movie-list', async(req,res,next)=>{
   try {
     const SQL = `
     INSERT INTO movies (title, stars)

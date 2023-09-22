@@ -14,7 +14,7 @@ const addMovieForm = (movies, setMovies) => {
 
   return (
     <div>
-      <form>
+      <form onSubmit={submit}>
         <label>
           Title: 
           <input type='text' onChange={ev => setTitle(ev.target.value)}/>
@@ -28,3 +28,4 @@ const addMovieForm = (movies, setMovies) => {
     </div>
   )
 }
+export default addMovieForm
