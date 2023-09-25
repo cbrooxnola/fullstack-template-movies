@@ -42,6 +42,7 @@ app.put('/api/movie-list/:id', async(req,res,next)=>{
       RETURNING *
     `
     const response = await client.query(SQL, [req.body.title, req.body.stars, req.params.id])
+    res.send(response.rows[0])
   } catch(error){
     next(error)
   }
